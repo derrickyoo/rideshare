@@ -323,3 +323,5 @@ rideshare/media/
 .env
 
 *.sqlite3
+
+.vscode/
