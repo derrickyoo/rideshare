@@ -325,3 +325,5 @@ rideshare/media/
 *.sqlite3
 
 .vscode/
+
+media/
