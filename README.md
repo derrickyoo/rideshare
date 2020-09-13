@@ -1,5 +1,4 @@
-rideshare-ng-app
-================
+# rideshare-ng-app
 
 A real-time ridesharing app using Django Channels and Angular.
 
