@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   rideshare-redis:
@@ -16,7 +16,7 @@ services:
   rideshare-server:
     build:
       context: ./server
-    command: python manage.py runserver 0.0.0.0:8000
+    command: daphne --bind 0.0.0.0 --port 8000 rideshare.asgi:application
     container_name: rideshare-server
     depends_on:
       - rideshare-redis
@@ -25,6 +25,40 @@ services:
       - ./server/.env
     ports:
       - 8000:8000
+    volumes: # new
+      - ./server:/usr/src/app
+      - media:/usr/src/app/media
+      - static:/usr/src/app/static
+
+  rideshare-client:
+    build:
+      context: ./client
+    command: ng serve --host 0.0.0.0
+    container_name: rideshare-client
+    depends_on:
+      - rideshare-server
+    environment:
+      - CHROME_BIN=chromium-browser
+    ports:
+      - 4200:4200
+    volumes: # new
+      - ./client:/usr/src/app
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: rideshare-nginx
+    depends_on:
+      - rideshare-server
+      - rideshare-client
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - media:/usr/src/app/media
+      - static:/usr/src/app/static
 
 volumes:
   rideshare-database:
+  media:
+  static:

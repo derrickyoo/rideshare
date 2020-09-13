@@ -55,7 +55,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "rideshare.urls"
 
 TEMPLATES = [
     {
@@ -73,9 +73,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+WSGI_APPLICATION = "rideshare.wsgi.application"
 
-ASGI_APPLICATION = "config.routing.application"
+ASGI_APPLICATION = "rideshare.routing.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -130,6 +130,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "/usr/src/app/static")]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 
 # Custom user
 AUTH_USER_MODEL = "users.CustomUser"
