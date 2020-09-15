@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AuthService } from './services/auth.service';
+import { IsRider } from './services/is-rider.service';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { RiderComponent } from './components/rider/rider.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,10 @@ import { LandingComponent } from './components/landing/landing.component';
     SignUpComponent,
     LogInComponent,
     LandingComponent,
+    RiderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [AuthService],
+  providers: [AuthService, IsRider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

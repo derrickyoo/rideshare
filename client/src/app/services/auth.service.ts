@@ -9,6 +9,8 @@ export interface IUser {
   username: string;
   first_name: string;
   last_name: string;
+  group: string;
+  photo: string;
 }
 
 export interface IToken {
@@ -22,6 +24,8 @@ export function createUser(data: any): IUser {
     username: data.username,
     first_name: data.first_name,
     last_name: data.last_name,
+    group: data.group,
+    photo: data.photo,
   };
 }
 
@@ -53,11 +57,29 @@ export class AuthService {
     return undefined;
   }
 
+  static isRider(): boolean {
+    const user = this.getUser();
+    if (user) {
+      return user.group === 'rider';
+    }
+    return false;
+  }
+
+  static isDriver(): boolean {
+    const user = this.getUser();
+    if (user) {
+      return user.group === 'driver';
+    }
+    return false;
+  }
+
   signUp(
     username: string,
     firstName: string,
     lastName: string,
-    password: string
+    password: string,
+    group: string,
+    photo: any
   ): Observable<IUser> {
     const url = '/api/users/sign_up/';
 
@@ -68,6 +90,8 @@ export class AuthService {
     formData.append('last_name', lastName);
     formData.append('password1', password);
     formData.append('password2', password);
+    formData.append('group', group);
+    formData.append('photo', photo);
 
     return this.http.request<IUser>('POST', url, { body: formData });
   }
