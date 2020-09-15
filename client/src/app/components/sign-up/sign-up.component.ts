@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -25,6 +25,12 @@ export class SignUpComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {}
+
+  onChange(event): void {
+    if (event.target.files && event.target.files.length > 0) {
+      this.user.photo = event.target.files[0];
+    }
+  }
 
   onSubmit(): void {
     this.authService

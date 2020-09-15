@@ -38,7 +38,9 @@ fdescribe('Authentication using a service', () => {
         userData.username,
         userData.first_name,
         userData.last_name,
-        'pAssw0rd!'
+        'pAssw0rd!',
+        'rider',
+        'sdfdfdf'
       )
       .subscribe((user) => {
         expect(user).toBe(userData);
@@ -74,13 +76,13 @@ fdescribe('Authentication using a service', () => {
     const tokenData = {};
 
     // A successful logout should delete local storage data.
-    localStorage.setItem('ridshare.auth', JSON.stringify(tokenData));
+    localStorage.setItem('rideshare.auth', JSON.stringify(tokenData));
 
     // Execute the function under test.
     authService.logOut();
 
     // Confirm that the local storage data was deleted.
-    expect(localStorage.getItem('ridshare.auth')).toBeNull();
+    expect(localStorage.getItem('rideshare.auth')).toBeNull();
   });
 
   it('should determine whether a user is logged in', () => {
@@ -88,7 +90,7 @@ fdescribe('Authentication using a service', () => {
     expect(AuthService.getUser()).toBeFalsy();
 
     localStorage.setItem(
-      'ridshare.auth',
+      'rideshare.auth',
       JSON.stringify(createFakeToken(createFakeUser()))
     );
     expect(AuthService.getUser()).toBeTruthy();

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class IsRider implements CanActivate {
+export class IsRiderService implements CanActivate {
   constructor() {}
 
   canActivate(): boolean {

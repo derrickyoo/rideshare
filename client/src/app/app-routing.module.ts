@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IsRider } from './services/is-rider.service';
+import { IsRiderService } from './services/is-rider.service';
 
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { RiderComponent } from './components/rider/rider.component';
+import { RiderDashboardComponent } from './components/rider-dashboard/rider-dashboard.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
   {
     path: 'rider',
     component: RiderComponent,
-    canActivate: [IsRider],
+    canActivate: [IsRiderService],
+    children: [{ path: '', component: RiderDashboardComponent }],
   },
   { path: '', component: LandingComponent },
 ];

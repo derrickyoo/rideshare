@@ -1,5 +1,5 @@
 <div class="middle-center">
-  <h1 class="landing logo">Ridshare App</h1>
+  <h1 class="landing logo">Rideshare App</h1>
   <div *ngIf="getUser(); then thenBlock; else elseBlock"></div>
   <ng-template #thenBlock>
     <button class="btn btn-primary" (click)="logOut()">Log out</button>
