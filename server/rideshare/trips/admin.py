@@ -10,20 +10,17 @@ class TripAdmin(admin.ModelAdmin):
         "pick_up_address",
         "drop_off_address",
         "status",
+        "driver",
+        "rider",
         "created",
-        "updated",
+        "modified",
     )
     list_display = (
-        "id",
-        "pick_up_address",
-        "drop_off_address",
         "status",
-        "created",
-        "updated",
     )
     list_filter = ("status",)
     readonly_fields = (
         "id",
         "created",
-        "updated",
+        "modified",
     )

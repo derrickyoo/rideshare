@@ -1,10 +1,12 @@
 import uuid
 
+from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
+from model_utils.models import TimeStampedModel
 
 
-class Trip(models.Model):
+class Trip(TimeStampedModel):
     REQUESTED = "REQUESTED"
     STARTED = "STARTED"
     IN_PROGRESS = "IN_PROGRESS"
@@ -22,8 +24,20 @@ class Trip(models.Model):
     status = models.CharField(
         max_length=20, choices=STATUSES, default=REQUESTED
     )
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    driver = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.DO_NOTHING,
+        related_name="trips_as_driver",
+    )
+    rider = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.DO_NOTHING,
+        related_name="trips_as_rider",
+    )
 
     def __str__(self):
         return f"{self.id}"
