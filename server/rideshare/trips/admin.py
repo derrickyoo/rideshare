@@ -15,9 +15,7 @@ class TripAdmin(admin.ModelAdmin):
         "created",
         "modified",
     )
-    list_display = (
-        "status",
-    )
+    list_display = ("status",)
     list_filter = ("status",)
     readonly_fields = (
         "id",

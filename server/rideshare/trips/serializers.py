@@ -11,11 +11,34 @@ class TripSerializer(serializers.ModelSerializer):
             "pick_up_address",
             "drop_off_address",
             "status",
+            "driver",
+            "rider",
             "created",
-            "updated",
+            "modified",
         )
         read_only_fields = (
             "id",
             "created",
-            "updated",
+            "modified",
         )
+
+
+class NestedTripSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Trip
+        fields = (
+            "id",
+            "pick_up_address",
+            "drop_off_address",
+            "status",
+            "driver",
+            "rider",
+            "created",
+            "modified",
+        )
+        read_only_fields = (
+            "id",
+            "created",
+            "modified",
+        )
+        depth = 1
