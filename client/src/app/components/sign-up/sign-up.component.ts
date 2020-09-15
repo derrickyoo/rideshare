@@ -8,7 +8,9 @@ class UserData {
     public username?: string,
     public firstName?: string,
     public lastName?: string,
-    public password?: string
+    public password?: string,
+    public group?: string,
+    public photo?: any
   ) {}
 }
 
@@ -30,7 +32,9 @@ export class SignUpComponent implements OnInit {
         this.user.username,
         this.user.firstName,
         this.user.lastName,
-        this.user.password
+        this.user.password,
+        this.user.group,
+        this.user.photo
       )
       .subscribe(
         () => {
