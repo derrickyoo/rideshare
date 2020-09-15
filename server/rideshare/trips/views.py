@@ -2,7 +2,7 @@ from django.db.models import Q
 from rest_framework import permissions, viewsets
 
 from .models import Trip
-from .serializers import TripSerializer
+from .serializers import NestedTripSerializer, TripSerializer
 
 
 class TripView(viewsets.ReadOnlyModelViewSet):
@@ -10,7 +10,7 @@ class TripView(viewsets.ReadOnlyModelViewSet):
     look_up_rule_kwargs = "trip_id"
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Trip.objects.all()
-    serializer_class = TripSerializer
+    serializer_class = NestedTripSerializer
 
     def get_queryset(self):  # new
         user = self.request.user
