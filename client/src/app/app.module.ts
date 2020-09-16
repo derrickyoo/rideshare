@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AuthService } from './services/auth.service';
 import { IsRiderService } from './services/is-rider.service';
+import { TripListResolver } from './services/trip-list.resolver';
+import { TripService } from './services/trip.service';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -25,7 +27,7 @@ import { RiderDashboardComponent } from './components/rider-dashboard/rider-dash
     RiderDashboardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [AuthService, IsRiderService],
+  providers: [AuthService, IsRiderService, TripListResolver, TripService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

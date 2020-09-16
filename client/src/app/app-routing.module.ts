@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IsRiderService } from './services/is-rider.service';
+import { TripListResolver } from './services/trip-list.resolver';
 
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/log-in/log-in.component';
@@ -16,7 +17,13 @@ const routes: Routes = [
     path: 'rider',
     component: RiderComponent,
     canActivate: [IsRiderService],
-    children: [{ path: '', component: RiderDashboardComponent }],
+    children: [
+      {
+        path: '',
+        component: RiderDashboardComponent,
+        resolve: { trips: TripListResolver },
+      },
+    ],
   },
   { path: '', component: LandingComponent },
 ];
