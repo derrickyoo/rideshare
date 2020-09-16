@@ -14,13 +14,13 @@ User = get_user_model()
 @database_sync_to_async
 def get_user(scope):
     close_old_connections()
-    query_string = parse_qs(scope['query_string'].decode())
-    token = query_string.get('token')
+    query_string = parse_qs(scope["query_string"].decode())
+    token = query_string.get("token")
     if not token:
         return AnonymousUser()
     try:
         access_token = AccessToken(token[0])
-        user = User.objects.get(id=access_token['id'])
+        user = User.objects.get(id=access_token["id"])
     except Exception as exception:
         return AnonymousUser()
     if not user.is_active:
@@ -30,8 +30,8 @@ def get_user(scope):
 
 class TokenAuthMiddleware(AuthMiddleware):
     async def resolve_scope(self, scope):
-        scope['user']._wrapped = await get_user(scope)
+        scope["user"]._wrapped = await get_user(scope)
 
-        ​
+
 def TokenAuthMiddlewareStack(inner):
     return CookieMiddleware(SessionMiddleware(TokenAuthMiddleware(inner)))
