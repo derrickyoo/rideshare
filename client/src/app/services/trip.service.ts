@@ -2,14 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, share } from 'rxjs/operators';
+import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 
 import { AuthService, IUser, createUser } from './auth.service';
 
 export interface ITrip {
   id: string;
   created: string;
-  updated: string;
+  modified: string;
   pick_up_address: string;
   drop_off_address: string;
   status: string;
@@ -21,7 +22,7 @@ export const createTrip = (data: any): ITrip => {
   return {
     id: data.id,
     created: data.created,
-    updated: data.updated,
+    modified: data.modified,
     pick_up_address: data.pick_up_address,
     drop_off_address: data.drop_off_address,
     status: data.status,
@@ -34,7 +35,21 @@ export const createTrip = (data: any): ITrip => {
   providedIn: 'root',
 })
 export class TripService {
+  webSocket: WebSocketSubject<any>;
+  messages: Observable<any>;
+
   constructor(private http: HttpClient) {}
+
+  connect(): void {
+    if (!this.webSocket || this.webSocket.closed) {
+      const accessToken = AuthService.getAccessToken();
+      this.webSocket = webSocket(
+        `ws://localhost:8080/rideshare/?token=${accessToken}`
+      );
+      this.messages = this.webSocket.pipe(share());
+      this.messages.subscribe((message) => console.log(message));
+    }
+  }
 
   getTrips(): Observable<ITrip[]> {
     const accessToken = AuthService.getAccessToken();
@@ -45,5 +60,17 @@ export class TripService {
       .pipe(
         map((trips: ITrip[]) => trips.map((trip: ITrip) => createTrip(trip)))
       );
+  }
+
+  createTrip(trip: ITrip): void {
+    this.connect();
+    const message: any = {
+      type: 'create.trip',
+      data: {
+        ...trip,
+        rider: trip.rider.id,
+      },
+    };
+    this.webSocket.next(message);
   }
 }
