@@ -77,8 +77,9 @@ export class TripService {
   getTrip(id: string): Observable<ITrip> {
     const accessToken = AuthService.getAccessToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${accessToken}` });
+
     return this.http
-      .get<ITrip>(`/api/trip/${id}/`, { headers })
+      .get<ITrip>(`/api/trips/${id}/`, { headers })
       .pipe(map((trip: ITrip) => createTrip(trip)));
   }
 }
