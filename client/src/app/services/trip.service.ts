@@ -73,4 +73,12 @@ export class TripService {
     };
     this.webSocket.next(message);
   }
+
+  getTrip(id: string): Observable<ITrip> {
+    const accessToken = AuthService.getAccessToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${accessToken}` });
+    return this.http
+      .get<ITrip>(`/api/trip/${id}/`, { headers })
+      .pipe(map((trip: ITrip) => createTrip(trip)));
+  }
 }
