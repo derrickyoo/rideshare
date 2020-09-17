@@ -7,12 +7,11 @@ from .serializers import NestedTripSerializer, TripSerializer
 
 class TripView(viewsets.ReadOnlyModelViewSet):
     lookup_field = "id"
-    look_up_rule_kwargs = "trip_id"
+    lookup_url_kwarg = "trip_id"
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = Trip.objects.all()
     serializer_class = NestedTripSerializer
 
-    def get_queryset(self):  # new
+    def get_queryset(self):
         user = self.request.user
         if user.group == "driver":
             return Trip.objects.filter(
